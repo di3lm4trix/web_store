@@ -1,7 +1,7 @@
-const configureDNS = require("./config.DNS");
+const configureDNS = require("./DNS.config");
 const mongoose = require("mongoose");
 require("dotenv").config();
-const consoleColors = require("./config.ConsoleColors");
+const consoleColors = require("./ConsoleColors.config");
 
 configureDNS("DATABASE");
 

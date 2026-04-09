@@ -1,5 +1,5 @@
 const dns = require("node:dns");
-const consoleColors = require("./config.ConsoleColors");
+const consoleColors = require("./ConsoleColors.config");
 
 const configureDns = (origen) => {
   dns.setServers(["8.8.8.8", "1.1.1.1"]);
