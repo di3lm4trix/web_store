@@ -1,0 +1,56 @@
+larry-store/
+├── backend/                    # Panel de Admin (Paula)
+│   ├── src/
+│   │   ├── config/
+│   │   │   └── db.js           # Conexión MongoDB
+│   │   ├── models/
+│   │   │   ├── Product.js
+│   │   │   ├── Order.js
+│   │   │   └── Admin.js
+│   │   ├── routes/
+│   │   │   ├── auth.js
+│   │   │   ├── products.js
+│   │   │   └── orders.js
+│   │   ├── middleware/
+│   │   │   └── authMiddleware.js
+│   │   ├── views/              # Templates Pug
+│   │   │   ├── layout/
+│   │   │   │   └── base.pug    # Layout compartido
+│   │   │   ├── auth/
+│   │   │   │   └── login.pug
+│   │   │   ├── products/
+│   │   │   │   ├── index.pug
+│   │   │   │   ├── create.pug
+│   │   │   │   └── edit.pug
+│   │   │   └── orders/
+│   │   │       └── index.pug
+│   │   └── public/             # Assets estáticos
+│   │       └── css/
+│   │           └── admin.css
+│   ├── app.js                  # Entry point
+│   └── package.json
+│
+└── frontend/                   # Tienda Online (pingüinos)
+    ├── src/
+    │   ├── config/
+    │   │   └── db.js
+    │   ├── models/
+    │   │   ├── Product.js      # Compartir o duplicar
+    │   │   └── Order.js
+    │   ├── routes/
+    │   │   ├── store.js
+    │   │   └── orders.js
+    │   ├── views/
+    │   │   ├── layout/
+    │   │   │   └── base.pug
+    │   │   ├── store/
+    │   │   │   ├── index.pug
+    │   │   │   └── product.pug
+    │   │   └── orders/
+    │   │       ├── create.pug
+    │   │       └── success.pug
+    │   └── public/
+    │       └── css/
+    │           └── store.css
+    ├── app.js
+    └── package.json
