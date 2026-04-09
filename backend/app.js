@@ -9,7 +9,7 @@ const session = require("express-session");
 // conectar a la db mongo
 const MongoStore = require("connect-mongo");
 // conectar a los enrutadores de las funciones
-const authRoutes = require("./src/routes/auth");
+const authRoutes = require("./src/routes/auth.routes");
 const productRoutes = require("./src/routes/products");
 const orderRoutes = require("./src/routes/orders");
 
