@@ -1,0 +1,29 @@
+extends ../layout/base.pug
+
+block content
+  .form-page
+    h1= category ? "Editar Categoría" : "Nueva Categoría"
+
+    if error
+      p.error= error
+
+    form(
+      action=category ? `/categories/${category._id}` : "/categories",
+      method="POST"
+    )
+      .form-group
+        label(for="name") Nombre
+        input#name(
+          type="text",
+          name="name",
+          value=category ? category.name : "",
+          required
+        )
+
+      .form-group
+        label(for="description") Descripción
+        textarea#description(name="description")= category ? category.description : ""
+
+      .form-actions
+        button.btn.btn-primary(type="submit")= category ? "Guardar cambios" : "Crear categoría"
+        a.btn.btn-secondary(href="/categories") Cancelar

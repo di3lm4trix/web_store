@@ -1,0 +1,38 @@
+extends ../layout/base.pug
+
+block content
+  .page-header
+    h1 Categorías
+    a.btn.btn-primary(href="/categories/new") + Nueva categoría
+
+  if error
+    p.error= error
+
+  if categories.length === 0
+    p.empty No hay categorías todavía. Creá la primera para poder agregar productos.
+
+  else
+    table.table
+      thead
+        tr
+          th Nombre
+          th Descripción
+          th Productos
+          th Acciones
+      tbody
+        each cat in categories
+          tr
+            td= cat.name
+            td= cat.description || "—"
+            td —
+            td.actions
+              a.btn.btn-sm(href=`/categories/${cat._id}/edit`) Editar
+              form(
+                action=`/categories/${cat._id}/delete`,
+                method="POST",
+                style="display: inline"
+              )
+                button.btn.btn-sm.btn-danger(
+                  type="submit",
+                  onclick="return confirm('¿Eliminar esta categoría?')"
+                ) Eliminar

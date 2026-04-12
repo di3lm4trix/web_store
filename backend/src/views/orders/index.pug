@@ -1,0 +1,30 @@
+extends ../layout/base.pug
+
+block content
+  h1 Pedidos
+
+  if orders.length === 0
+    p.empty No hay pedidos todavía.
+  else
+    each order in orders
+      .order-card
+        .order-header
+          span.order-id ##{ order._id.toString().slice(-6).toUpperCase() }
+          span.order-date= new Date(order.createdAt).toLocaleDateString("es")
+          span(class=`badge badge--${order.status}`)= order.status
+
+        p 👤 #{ order.customerName }
+        p 🏠 #{ order.address }
+
+        ul.order-items
+          each item in order.items
+            li #{ item.name } x#{ item.quantity } — $#{ item.price * item.quantity }
+
+        p.order-total Total: $#{ order.total }
+
+        form(action=`/orders/${order._id}/status`, method="POST")
+          select(name="status")
+            option(value="pendiente", selected=order.status === "pendiente") Pendiente
+            option(value="enviado", selected=order.status === "enviado") Enviado
+            option(value="entregado", selected=order.status === "entregado") Entregado
+          button(type="submit") Actualizar estado

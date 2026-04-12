@@ -1,0 +1,16 @@
+extends ../layout/base.pug
+
+block content
+  .login-wrapper
+  h1.login-title Panel de Admin
+  p.login-subtitle Acceso Restringido
+  if error
+    p.error = error
+  form.login-form(action="/auth/login", method="POST")
+    .form-group
+      label(for="username") Usuario
+      input#username(type="text", name="username", required, autofocus)
+    .form-group
+      label(for="password") Contrasena
+      input#password(type="password", name="password", required)
+      button.btn.btn-primary(type="submit") Ingresar

@@ -1,0 +1,37 @@
+extends ../layout/base.pug
+
+block content
+  .page-header
+    h1 Productos
+    a.btn.btn-primary(href="/products/new") + Nuevo producto
+
+  if products.length === 0
+    p.empty No hay productos todavía.
+
+  else
+    table.table
+      thead
+        tr
+          th Nombre
+          th Categoría
+          th Precio
+          th Stock
+          th Acciones
+      tbody
+        each product in products
+          tr
+            td= product.name
+            td= product.category ? product.category.name : "—"
+            td $#{ product.price }
+            td= product.stock
+            td.actions
+              a.btn.btn-sm(href=`/products/${product._id}/edit`) Editar
+              form(
+                action=`/products/${product._id}/delete`,
+                method="POST",
+                style="display: inline"
+              )
+                button.btn.btn-sm.btn-danger(
+                  type="submit",
+                  onclick="return confirm('¿Eliminar este producto?')"
+                ) Eliminar

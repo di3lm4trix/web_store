@@ -1,0 +1,24 @@
+doctype html
+html(lang="es")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title= title + " | Admin"
+    link(rel="stylesheet", href="/css/admin.css")
+    block styles
+
+  body
+    if admin
+      nav.navbar
+        a.logo(href="/products") Panel de Admin
+        ul.nav-links
+          li: a(href="/products") Productos
+          li: a(href="/categories") Categorías
+          li: a(href="/orders") Pedidos
+        form.logout-form(action="/auth/logout", method="POST")
+          button.btn-logout(type="submit") Cerrar sesión
+
+    main.container
+      block content
+
+    block scripts

@@ -7,22 +7,20 @@ const mongoose = require("mongoose");
 // para mantener las sesiones
 const session = require("express-session");
 // conectar a la db mongo
-const MongoStore = require("connect-mongo");
+const { MongoStore } = require("connect-mongo");
 // conectar a los enrutadores de las funciones
 const authRoutes = require("./src/routes/auth.routes");
-const productRoutes = require("./src/routes/products");
-const orderRoutes = require("./src/routes/orders");
+const productRoutes = require("./src/routes/products.routes");
+const orderRoutes = require("./src/routes/orders.routes");
+const categoriesRoutes = require("./src/routes/categories.routes");
+// conectar a la base de datos
+const { connectDB } = require("./src/config/DB.config");
 
 // definir a express como motor del server
 const app = express();
 
-// // conectar a mongo
-// mongoose
-//   .connect(process.env.MONGO_URI)
-//   // en caso de conexion correcta
-//   .then(() => console.log("Mongo DB conectado"))
-//   // capturar un error y mostrar en caso de que ocurra
-//   .catch((err) => console.error("❌ Error MongoDB:", err));
+// conectar a la base de datos
+connectDB().catch((err) => console.error("Error conectando a la DB:", err));
 
 // configurar motor de plantillas
 app.set("view engine", "pug");
@@ -68,6 +66,7 @@ app.use((req, res, next) => {
 app.use("/auth", authRoutes);
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
+app.use("/categories", categoriesRoutes);
 
 // redirigir la raiz a products
 app.get("/", (req, res) => res.redirect("/products"));
@@ -79,6 +78,10 @@ app.use((req, res) => {
 
 // iniciar el server
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () =>
-  console.log(`🐧 Admin panel corriendo en http://localhost:${PORT}`),
-);
+connectDB()
+  .then(() =>
+    app.listen(PORT, () =>
+      console.log(`🐧 Admin panel corriendo en http://localhost:${PORT}`),
+    ),
+  )
+  .catch((err) => console.error("Error al conectar la DB:", err));

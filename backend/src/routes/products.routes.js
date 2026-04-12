@@ -3,20 +3,22 @@ const router = express.Router();
 const Category = require("../models/category.model");
 const Product = require("../models/product.model");
 const { requireAuth } = require("../middleware/authMiddleware");
-const consoleColors = require("../config/consoleColors");
+const consoleColors = require("../config/consoleColors.config");
 
 // se configura el middleware, cada peticion a esta ruta pasara por aqui
 router.use(requireAuth);
 
 router.get("/", async (req, res) => {
-  const products = (await Product.find().populate("category")).sort({
-    createdAt: -1,
-  });
+  const products = (await Product.find().populate("category")).sort(
+    (a, b) => b.createdAt - a.createdAt,
+  );
   res.render("products/index", { title: "Productos", products });
 });
 
 router.get("/new", async (req, res) => {
-  const categories = (await Category.find()).toSorted({ name: 1 });
+  const categories = (await Category.find()).toSorted((a, b) =>
+    a.name.localeCompare(b.name),
+  );
   res.render("products/form", {
     title: "Nuevo Producto",
     product: null,
@@ -29,7 +31,9 @@ router.post("/", async (req, res) => {
     await Product.create(req.body);
     res.redirect("/products");
   } catch (e) {
-    const categories = (await Category.find()).toSorted({ name: 1 });
+    const categories = (await Category.find()).toSorted((a, b) =>
+      a.name.localeCompare(b.name),
+    );
     res.render("products/form", {
       title: "Nuevo Producto",
       product: null,

@@ -3,7 +3,7 @@ const router = express.Router();
 const Category = require("../models/category.model");
 const Product = require("../models/product.model");
 const { requireAuth } = require("../middleware/authMiddleware");
-const consoleColors = require("../config/consoleColors");
+const consoleColors = require("../config/consoleColors.config");
 
 // se configura el middleware, cada peticion a esta ruta pasara por aqui
 router.use(requireAuth);

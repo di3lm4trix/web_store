@@ -1,0 +1,61 @@
+extends ../layout/base.pug
+
+block content
+  .form-page
+    h1= product ? "Editar Producto" : "Nuevo Producto"
+
+    if error
+      p.error= error
+
+    form(
+      action=product ? `/products/${product._id}` : "/products",
+      method="POST"
+    )
+      .form-group
+        label(for="name") Nombre
+        input#name(
+          type="text",
+          name="name",
+          value=product ? product.name : "",
+          required
+        )
+
+      .form-group
+        label(for="description") Descripción
+        textarea#description(name="description", required)= product ? product.description : ""
+
+      .form-row
+        .form-group
+          label(for="price") Precio
+          input#price(
+            type="number",
+            name="price",
+            step="0.01",
+            min="0",
+            value=product ? product.price : "",
+            required
+          )
+
+        .form-group
+          label(for="stock") Stock
+          input#stock(
+            type="number",
+            name="stock",
+            min="0",
+            value=product ? product.stock : 0,
+            required
+          )
+
+      .form-group
+        label(for="category") Categoría
+        select#category(name="category", required)
+          option(value="", disabled, selected=!product) Seleccioná una categoría
+          each cat in categories
+            option(
+              value=cat._id,
+              selected=product && product.category && product.category._id.toString() === cat._id.toString()
+            )= cat.name
+
+      .form-actions
+        button.btn.btn-primary(type="submit")= product ? "Guardar cambios" : "Crear producto"
+        a.btn.btn-secondary(href="/products") Cancelar
